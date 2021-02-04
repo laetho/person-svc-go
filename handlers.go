@@ -21,6 +21,8 @@ func getPersonsHandler(w http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		_, _ = fmt.Fprintf(os.Stderr, "Unable to get DB connection: %v\n", err)
 	}
+	defer conn.Release()
+
 	var persons []*Person
 	err = pgxscan.Select(context.Background(), conn, &persons,"select * from person" )
 	if err != nil {
