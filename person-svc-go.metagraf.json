@@ -1,0 +1,70 @@
+{
+  "kind": "metagraf",
+  "metadata": {
+    "name": "person-svc-go",
+    "labels": {
+      "metagraf": "true"
+    },
+    "annotations": {
+      "app": "person-svc-go"
+    }
+  },
+  "spec": {
+    "type": "service",
+    "version": "1.0.0",
+    "description": "A simple service for storing persons.",
+    "repository": "ssh://git@github.com:laetho/person-svc-go.git",
+    "branch": "master",
+    "image": "ghcr.io/laetho/person-svc-go:latest",
+    "startupProbe": {},
+    "livenessProbe": {},
+    "readinessProbe": {},
+    "environment": {
+      "local": [
+        {
+          "name": "POSTGRESQL_USER",
+          "required": true,
+          "type": "string",
+          "description": "Username for the database connection."
+        },
+        {
+          "name": "POSTGRESQL_PASSWORD",
+          "required": true,
+          "type": "string",
+          "secretfrom": "person-svc-go-pgdbpassword",
+          "key": "password",
+          "description": "Password to use for the database connection."
+        },
+        {
+          "name": "PERSON_SVC_GO_DB_SERVICE_HOST",
+          "required": false,
+          "type": "string",
+          "description": "A optional Kubernetes based service discovery variable."
+        },
+        {
+          "name": "POSTGRESQL_PORT",
+          "required": false,
+          "type": "string",
+          "description": "TCP Port of the database instance. Defaults to standard port.",
+          "default": "5432"
+        },
+        {
+          "name": "POSTGRESQL_SSL",
+          "required": false,
+          "type": "string",
+          "description": "Disable or enable SSL mode for database connection.",
+          "default": "disable"
+        }
+      ]
+    },
+    "resources": [
+      {
+        "name": "PERSON_SVC_GO_DB",
+        "type": "clusterservice",
+        "required": true,
+        "external": false,
+        "description": "We need a PostgreSQL Database in the cluster to operate. We implicitly expect the PERSON_SVC_GO_DB_SERVICE_HOST to be available. You can set it manually for local development."
+      }
+    ]
+  }
+}
