@@ -28,7 +28,7 @@ services:
         limits:
           memory: '1G'
           cpus: '2'
-    image: person-svc-go:latest
+    image: ghcr.io/laetho/person-svc-go:latest
     ports:
       - 8080:8080
 
