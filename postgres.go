@@ -29,7 +29,7 @@ func NewPostgresDSN() PostgresDSN {
 
 func (dsn PostgresDSN) Valid() bool {
 	v := reflect.ValueOf(dsn)
-	for i := 0; i<v.NumField(); i++ {
+	for i := 0; i < v.NumField(); i++ {
 		if len(v.Field(i).String()) == 0 {
 			return false
 		}

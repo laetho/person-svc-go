@@ -4,10 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/georgysavva/scany/pgxscan"
 	"log"
 	"net/http"
 	"os"
-	"github.com/georgysavva/scany/pgxscan"
 )
 
 func statusHandler(w http.ResponseWriter, req *http.Request) {
@@ -17,14 +17,14 @@ func statusHandler(w http.ResponseWriter, req *http.Request) {
 }
 
 func getPersonsHandler(w http.ResponseWriter, req *http.Request) {
-	conn , err := dbcp.Acquire(context.Background())
+	conn, err := dbcp.Acquire(context.Background())
 	if err != nil {
 		_, _ = fmt.Fprintf(os.Stderr, "Unable to get DB connection: %v\n", err)
 	}
 	defer conn.Release()
 
 	var persons []*Person
-	err = pgxscan.Select(context.Background(), conn, &persons,"select * from person" )
+	err = pgxscan.Select(context.Background(), conn, &persons, "select * from person")
 	if err != nil {
 		log.Printf("Query failed: %v", err)
 	}

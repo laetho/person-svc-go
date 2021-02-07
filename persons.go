@@ -19,4 +19,3 @@ type CreatePerson struct {
 	Address string `json:"address,omitempty"`
 	Phone   int32  `json:"phone,omitempty"`
 }
-

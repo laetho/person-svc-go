@@ -37,16 +37,15 @@ func main() {
 		os.Exit(1)
 	}
 	defer dbcp.Close()
-	
 
 	// Run migration
-	conn , err := dbcp.Acquire(context.Background())
+	conn, err := dbcp.Acquire(context.Background())
 	if err != nil {
 		_, _ = fmt.Fprintf(os.Stderr, "Unable to get DB connection: %v\n", err)
 	}
 	defer conn.Release()
 
-	_ , err = conn.Query(context.Background(), PersonMigration)
+	_, err = conn.Query(context.Background(), PersonMigration)
 	if err != nil {
 		panic(err)
 	}
@@ -58,4 +57,3 @@ func main() {
 	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(port), nil))
 
 }
-
