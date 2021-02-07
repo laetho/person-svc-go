@@ -1,0 +1,45 @@
+{
+  "kind": "metagraf",
+  "metadata": {
+    "name": "person-svc-go-db",
+    "labels": {
+      "metagraf": "true"
+    },
+    "annotations": {
+      "app": "person-svc-go-db"
+    }
+  },
+  "spec": {
+    "type": "database",
+    "version": "13.1.0",
+    "description": "A Postgresql Deployment",
+    "repository": "ssh://git@github.com:laetho/person-svc-go.git",
+    "branch": "master",
+    "image": "postgres:latest",
+    "startupProbe": {},
+    "livenessProbe": {},
+    "readinessProbe": {},
+    "environment": {
+      "local": [
+        {
+          "name": "POSTGRES_DB",
+          "required": true,
+          "type": "string",
+          "description": "Database name."
+        },
+        {
+          "name": "POSTGRES_USER",
+          "required": true,
+          "type": "string",
+          "description": "Name of user for $POSTGRES_DB."
+        },
+        {
+          "name": "POSTGRES_PASSWORD",
+          "required": true,
+          "type": "string",
+          "description": "Password for the $POSTGRES_USER @ $POSTGRES_DB."
+        }
+      ]
+    }
+  }
+}
