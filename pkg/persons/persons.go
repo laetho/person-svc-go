@@ -1,4 +1,4 @@
-package main
+package persons
 
 const PersonMigration = `CREATE TABLE IF NOT EXISTS person (
 id serial primary key,
