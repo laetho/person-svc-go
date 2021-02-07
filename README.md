@@ -30,7 +30,7 @@ podman-compose restart person-svc-go
 
 My old and trusty workstation from yesteryears:
 
-```
+```bash
 processor       : 0
 vendor_id       : GenuineIntel
 cpu family      : 6
@@ -62,7 +62,7 @@ power management:
 
 Run that connects to Postgres and queries for persons and returns the results.
 
-```
+```bash
 wrk -c 100 -d 60 -t 8 http://localhost:8080/persons
 Running 1m test @ http://localhost:8080/persons
   8 threads and 100 connections
@@ -77,7 +77,7 @@ Transfer/sec:      8.96MB
 
 Run that calls a status enpoint with a static JSON response.
 
-```
+```bash
 wrk -c 100 -d 60 -t 8 http://localhost:8080/status
 Running 1m test @ http://localhost:8080/status
   8 threads and 100 connections
