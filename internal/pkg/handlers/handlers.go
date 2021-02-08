@@ -26,7 +26,7 @@ func GetPersonsHandler(pool *pgxpool.Pool) http.HandlerFunc {
 		}
 		defer conn.Release()
 
-		var persons []*persons.Person
+		var persons persons.Persons
 		err = pgxscan.Select(context.Background(), conn, &persons, "select * from person")
 		if err != nil {
 			log.Printf("Query failed: %v", err)
