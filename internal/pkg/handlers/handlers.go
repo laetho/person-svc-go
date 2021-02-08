@@ -26,12 +26,12 @@ func GetPersonsHandler(pool *pgxpool.Pool) http.HandlerFunc {
 		}
 		defer conn.Release()
 
-		var persons persons.Persons
-		err = pgxscan.Select(context.Background(), conn, &persons, "select * from person")
+		var p persons.Persons
+		err = pgxscan.Select(context.Background(), conn, &p, p.SelectAllQuery())
 		if err != nil {
 			log.Printf("Query failed: %v", err)
 		}
-		out, _ := json.Marshal(persons)
+		out, _ := json.Marshal(p)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(200)
 		_, _ = fmt.Fprintf(w, string(out))
