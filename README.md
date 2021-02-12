@@ -1,20 +1,49 @@
 # person-svc-go
 
+
 ## Building
 
+We'll experiment with different ways of building this rather service.
+
+We'll try the following tools:
+
+- buildah
+- podman-compose
+- docker
+- docker-compose
+- GitHub Actions
+
+### buildah
 Experimenting with buildah and podman instead of running a docker 
 daemon. Testing podman-compose as well. 
 
 ```bash
 buildah bud -f Dockerfile -t person-svc-go
-# or
-podman-compose build
-
 ```
 
-Todo: Test with docker and docker-compose.
+### podman-compose
+
+```bash
+podman-compose build
+```
+
 
 ## Running
+
+In this section we'll explore different ways of running the container we 
+built and other supporting containers we need to test or run this application. 
+
+We'll go into the following tools for running it or generating manifests to run
+it on kuberntes using diffrent tools like:
+
+- podman
+- podman-compose
+- docker
+- docker-compose
+- kompose
+- metagraf / mg
+
+### On my local machine
 
 ```bash
 # Run just the built image
@@ -26,7 +55,9 @@ podman-compose up
 podman-compose restart person-svc-go
 ```
 
-## Local Test Results
+### On kubernetes
+
+## Performance testing
 
 My old and trusty workstation from yesteryears:
 
