@@ -11,11 +11,14 @@
   },
   "spec": {
     "type": "database",
-    "version": "13.1.0",
+    "version": "1.0.0",
     "description": "A Postgresql Deployment",
     "repository": "ssh://git@github.com:laetho/person-svc-go.git",
     "branch": "master",
-    "image": "postgres:latest",
+    "image": "docker.io/postgres:latest",
+    "ports": {
+      "5432": 5432
+    },
     "startupProbe": {},
     "livenessProbe": {},
     "readinessProbe": {},

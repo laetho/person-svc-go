@@ -3,15 +3,14 @@
 
 ## Building
 
-We'll experiment with different ways of building this rather service.
+We'll experiment with different ways of building this rather simple service.
 
 We'll try the following tools:
 
 - buildah
 - podman-compose
-- docker
-- docker-compose
 - GitHub Actions
+- Openshift BuildConfig (s2i)
 
 ### buildah
 Experimenting with buildah and podman instead of running a docker 
@@ -38,16 +37,33 @@ it on kuberntes using diffrent tools like:
 
 - podman
 - podman-compose
-- docker
-- docker-compose
-- kompose
+- kompose or podman 3.0
 - metagraf / mg
 
 ### On my local machine
 
+#### podman
+
+Podman command to run the Postgres instance our person-svc-go service needs:
+
 ```bash
-# Run just the built image
+podman run --env-file configs/envfiles/postgres.env docker.io/library/postgres
+# or with --detach to get your shell back
+podman run --detach --env-file configs/envfiles/postgres.env docker.io/library/postgres
+```
+
+Podman command to run the person-svc-go container we built:
+
+```bash
+# Run the locally built image
 podman run <imageid>
+# or
+podman run localhost/person-svc-go
+```
+
+#### podman-compose
+
+```bash
 # or
 podman-compose up
 # Need to issue restart since the go application starts before the database is ready.
@@ -55,7 +71,54 @@ podman-compose up
 podman-compose restart person-svc-go
 ```
 
-### On kubernetes
+### For Kubernetes
+
+#### kompose
+
+We can use a tool called kompose to transform a docker-compose.yaml to 
+Kubernetes manifests.
+
+This is a quick way to get some basic Kubernetes manifests going.
+
+```bash
+#todo
+kompose ....
+```
+
+#### metaGraf - Generating manifests with mg
+
+We'll use the mg tool from the https://github.com/laetho/metagraf project
+and the person-svc-go-db.metagraf.json we wrote. We're using the *mg* specific
+config files in configs/mg/ as input for some of the commands.
+
+To generate an empty .properties file from a metaGraf specification you
+can do the following:
+
+```bash
+mg create properties person-svc-go-db.metagraf.json > configs/mg/postgres.properties 
+```
+
+Generate kubernetes manifests for the ephemeral PosgreSQL instance.
+
+scripts/mg-generate-manifests.sh:
+```bash
+
+mg create deployment \
+ --output \
+ --dryrun \
+ --namespace person \
+ --disable-aliasing \
+ -o yaml \
+ --cvfile configs/mg/person-go-svc-db.properties \
+ person-svc-go-db.metagraf.json \
+ > deployments/mg/person-svc-go.deployment.yaml
+ 
+```
+
+```yaml
+...
+```
+
 
 ## Performance testing
 
