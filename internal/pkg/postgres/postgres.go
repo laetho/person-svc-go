@@ -19,7 +19,7 @@ func NewPostgresDSN() PostgresDSN {
 	dsn := PostgresDSN{
 		User:     os.Getenv("POSTGRESQL_USER"),
 		Password: os.Getenv("POSTGRESQL_PASSWORD"),
-		Host:     os.Getenv("PERSON_SVC_GO_DB_SERVICE_HOST"),
+		Host:     os.Getenv("PERSON_SVC_GO_DBV1_SERVICE_HOST"),
 		Port:     os.Getenv("POSTGRESQL_PORT"),
 		Database: os.Getenv("POSTGRESQL_DATABASE"),
 		SSLMode:  os.Getenv("POSTGRESQL_SSL"),

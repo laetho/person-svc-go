@@ -36,21 +36,21 @@
           "description": "Password to use for the database connection."
         },
         {
-          "name": "PERSON_SVC_GO_DB_SERVICE_HOST",
+          "name": "PERSON_SVC_GO_DBV1_SERVICE_HOST",
           "required": false,
           "type": "string",
           "description": "A optional Kubernetes based service discovery variable."
         },
         {
           "name": "POSTGRESQL_PORT",
-          "required": false,
+          "required": true,
           "type": "string",
           "description": "TCP Port of the database instance. Defaults to standard port.",
           "default": "5432"
         },
         {
           "name": "POSTGRESQL_SSL",
-          "required": false,
+          "required": true,
           "type": "string",
           "description": "Disable or enable SSL mode for database connection.",
           "default": "disable"
@@ -59,7 +59,7 @@
     },
     "resources": [
       {
-        "name": "PERSON_SVC_GO_DB",
+        "name": "PERSON_SVC_GO_DBV1",
         "type": "clusterservice",
         "required": true,
         "external": false,

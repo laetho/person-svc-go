@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: person-svc-gov1
+  name: person-svc-gov1
+spec:
+  selector:
+    app: person-svc-gov1
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

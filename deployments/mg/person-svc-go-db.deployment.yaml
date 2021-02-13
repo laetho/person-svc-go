@@ -32,12 +32,12 @@ spec:
           value: person-svc-go-dbv1
         - name: MG_API_VERSION
           value: 1.0.0
+        - name: POSTGRES_USER
+          value: person-svc
         - name: POSTGRES_PASSWORD
           value: person-svc
         - name: POSTGRES_DB
           value: persons
-        - name: POSTGRES_USER
-          value: person-svc
         image: docker.io/postgres:latest
         imagePullPolicy: IfNotPresent
         name: person-svc-go-dbv1

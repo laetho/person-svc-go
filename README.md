@@ -95,14 +95,34 @@ To generate an empty .properties file from a metaGraf specification you
 can do the following:
 
 ```bash
-mg create properties person-svc-go-db.metagraf.json > configs/mg/postgres.properties 
+> mg create properties person-svc-go-db.metagraf.json > configs/mg/person-svc-go-db.properties 
+
+> mg create properties person-svc-go.metagraf.json > configs/mg/person-svc-go.properties
+
+```
+
+The *mg* tool can also validate your *.properties* file against the metaGraf specification:
+
+```bash
+> mg inspect properties person-svc-go.metagraf.json configs/mg/person-svc-go.properties 
+The configs/mg/person-svc-go.properties configuration is valid for this metaGraf specification.
 ```
 
 Generate kubernetes manifests for the ephemeral PosgreSQL instance.
 
-scripts/mg-generate-manifests.sh:
+Snippet from: [scripts/mg-generate-manifests.sh](https://github.com/laetho/person-svc-go/blob/master/scripts/mg-generate-manifests.sh):
 ```bash
+...
+# Service{}
+mg create service \
+ --output \
+ --dryrun \
+ --namespace person \
+ -o yaml \
+ person-svc-go-db.metagraf.json \
+ | tee deployments/mg/person-svc-go-db.service.yaml
 
+# Deployment{}
 mg create deployment \
  --output \
  --dryrun \
@@ -111,12 +131,42 @@ mg create deployment \
  -o yaml \
  --cvfile configs/mg/person-go-svc-db.properties \
  person-svc-go-db.metagraf.json \
- > deployments/mg/person-svc-go.deployment.yaml
- 
+ | tee deployments/mg/person-svc-go-db.deployment.yaml
+ ...
 ```
+
+ 
 
 ```yaml
 ...
+```
+
+Generate Kubernetes manifests for the person-svc-go service:
+
+Snippet from: [scripts/mg-generate-manifests.sh](https://github.com/laetho/person-svc-go/blob/master/scripts/mg-generate-manifests.sh):
+```bash
+# person-svc-gov1 Service{}
+mg create service \
+ --output \
+ --dryrun \
+ --namespace person \
+ -o yaml \
+ person-svc-go.metagraf.json \
+ | tee deployments/mg/person-svc-go.service.yaml
+
+# person-svc-gov1 Deployment{}
+# --disable-aliasing is used because default behaviour is to expect a retag image with the
+# application name and not the upstream name on your internal registry. This should be the
+# other way around as default.
+mg create deployment \
+ --output \
+ --dryrun \
+ --namespace person \
+ --disable-aliasing \
+ -o yaml \
+ --cvfile configs/mg/person-svc-go.properties \
+ person-svc-go.metagraf.json \
+ | tee deployments/mg/person-svc-go.deployment.yaml
 ```
 
 
