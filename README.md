@@ -1,9 +1,15 @@
 # person-svc-go
 
+This is a really simple and basic implementation of a go lang based
+microservice. It's main purpose is to demonstrate how to containerize
+it, how to work with this locally and how to run this on that Kubernetes
+thing.
+
+
 
 ## Building
 
-We'll experiment with different ways of building this rather simple service.
+We'll experiment with different ways of building this very simple service.
 
 We'll try the following tools:
 
@@ -21,6 +27,7 @@ buildah bud -f Dockerfile -t person-svc-go
 ```
 
 ### podman-compose
+
 
 ```bash
 podman-compose build
@@ -134,12 +141,9 @@ mg create deployment \
  | tee deployments/mg/person-svc-go-db.deployment.yaml
  ...
 ```
-
- 
-
-```yaml
-...
-```
+Produced:
+- [deployments/mg/person-svc-go-db.deployment.yaml](https://github.com/laetho/person-svc-go/blob/master/deployments/mg/person-svc-go-db.deployment.yaml)
+- [deployments/mg/person-svc-go-db.service.yaml](https://github.com/laetho/person-svc-go/blob/master/deployments/mg/person-svc-go-db.service.yaml)
 
 Generate Kubernetes manifests for the person-svc-go service:
 
