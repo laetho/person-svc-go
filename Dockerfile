@@ -4,10 +4,9 @@ FROM golang:latest as builder
 # Source
 WORKDIR /workspace
 COPY . /workspace 
-RUN go mod vendor 
 
-# Build
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GO111MODULE=on go build -a -o person-svc-go cmd/person-svc-go/main.go 
+RUN go mod vendor \ 
+&& CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GO111MODULE=on go build -a -o person-svc-go cmd/person-svc-go/main.go 
 
 # Use distroless as minimal base image to package the manager binary
 # Refer to https://github.com/GoogleContainerTools/distroless for more details
