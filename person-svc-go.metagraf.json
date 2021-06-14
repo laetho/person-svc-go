@@ -13,9 +13,10 @@
     "type": "service",
     "version": "1.0.0",
     "description": "A simple service for storing persons.",
-    "repository": "ssh://git@github.com:laetho/person-svc-go.git",
-    "branch": "master",
+    "repository": "git://github.com/laetho/person-svc-go.git",
     "image": "ghcr.io/laetho/person-svc-go:latest",
+    "branch": "master",
+    "dockerfile": "Dockerfile",
     "startupProbe": {},
     "livenessProbe": {},
     "readinessProbe": {},
@@ -64,6 +65,38 @@
         "required": true,
         "external": false,
         "description": "We need a PostgreSQL Database in the cluster to operate. We implicitly expect the PERSON_SVC_GO_DB_SERVICE_HOST to be available. You can set it manually for local development."
+      }
+    ],
+    "volume": [
+      {
+        "name": "kaniko-cache-person-svc-go",
+	"description": "Persitent Volume used as a build cache",
+	"mountpath" : "/workspace/cache",
+	"accessmodes": [
+		"ReadWriteOnce"
+	],
+	"capacity": [
+	  {
+            "storage": "5Gi"
+	  }
+	],
+	"hostPath": {
+	  "path": "/data/kaniko-cache-person-svc-go",
+	  "type": ""
+	}
+      }
+    ],
+    "buildsecret": [
+      {
+        "name": "myregistrysecret",
+        "description": "Kubernetes secret with a docker config.json.",
+        "mountpath": "/kaniko/.docker",
+        "items": [
+          {
+            "key": ".dockerconfigjson",
+            "path": "config.json"
+          }
+        ]
       }
     ]
   }

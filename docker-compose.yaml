@@ -20,9 +20,9 @@ services:
   person-svc-go:
     build: .
     depends_on:
-      - postgres
+      - person-svc-go-db 
     links:
-      - postgres
+      - person-svc-go-db 
     deploy:
       resources:
         limits:
