@@ -2,7 +2,8 @@
 FROM golang:latest as builder
 
 # Source
-ADD . . 
+WORKDIR /workspace
+ADD . /workspace 
 
 RUN go mod download 
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GO111MODULE=on go build -a -o person-svc-go cmd/person-svc-go/main.go 
